@@ -73,13 +73,12 @@
         </div>
       </div>
       <el-dialog v-model="dialogTableVisible" title="How it works" center width="800">
-          <p>Pump prevents rugs by making sure that all created tokens are safe. Each coin on pump is a fair-launch with no presale and no team allocation.</p>
+          <p>Memecoin ensures token safety to prevent rug pulls. Each coin on memecoin.fun goes through a fair presale and launch with no team allocation.</p>
 
-          <p>step 1: pick a coin that you like</p>
-          <p>step 2: buy the coin on the bonding curve</p>
-          <p>step 3: sell at any time to lock in your profits or losses</p>
-          <p>step 4: when enough people buy on the bonding curve it reaches a market cap of $69k</p>
-          <p>step 5: $12k of liquidity is then deposited in raydium and burned</p>
+          <p>step 1: Pick a coin you like</p>
+          <p>step 2: Buy the coin from the list</p>
+          <p>step 3: Sell anytime to lock in profits or losses (refund)</p>
+          <p>step 4: Once the presale quota is reached, all tokens will be automatically created on Raydium, and LP tokens will be burned</p>
           <div class="btns" @click="dialogTableVisible = false">
             [I'm ready to pump]
           </div>

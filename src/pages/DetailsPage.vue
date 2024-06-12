@@ -655,12 +655,9 @@ const AmountDisplay = (e) => {
                   ? 50
                   : 100
   let ac = new BigNumber(e).dividedBy((new BigNumber(ye).dividedBy(new BigNumber(500000000)))) 
-  console.log(ac.toNumber());
   money.value = ac.toNumber()
 };
 const Calculatesol = (e) => {
-  console.log('--------',e);
-  console.log(Amount.value);
   if(Amount.value == '') return  money.value = 0
   let ye = ProjectDetails.value.price == 0
                   ? 20
@@ -668,7 +665,6 @@ const Calculatesol = (e) => {
                   ? 50
                   : 100
   let ac = new BigNumber(Amount.value).dividedBy((new BigNumber(ye).dividedBy(new BigNumber(500000000)))) 
-  console.log(ac.toNumber());
   money.value = ac.toNumber()
 };
 const proportion = (RemainingQuantity) => {
@@ -741,7 +737,6 @@ const purchaseList = async()=>{
       }
     );
     purchase_List.value = accounts
-    console.log('数据',purchase_List.value);
     //    accounts.forEach(account => {
     //        const balance = JSON.stringify(account.account.data.parsed.info);
     //        console.log('好东西',balance)
@@ -907,7 +902,6 @@ const TransactionRecords = ()=>{
   )
     .then((res) => {
       recordList.value = res.returnData
-      console.log('交易记录',res.returnData);
     })
     .catch((e) => {
       console.error(e);
