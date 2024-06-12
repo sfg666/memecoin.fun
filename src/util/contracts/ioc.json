@@ -1,0 +1,978 @@
+{
+  "version": "0.1.0",
+  "name": "memecoin",
+  "instructions": [
+    {
+      "name": "initializeGlobalConfigs",
+      "accounts": [
+        {
+          "name": "globalConfig",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "admin",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "createMemecoinFeeReceiver",
+          "type": "publicKey"
+        },
+        {
+          "name": "launchSuccessFeeReceiver",
+          "type": "publicKey"
+        },
+        {
+          "name": "createMemecoinFee",
+          "type": "u64"
+        },
+        {
+          "name": "launchSuccessFeeBps",
+          "type": "u16"
+        }
+      ]
+    },
+    {
+      "name": "setCreateMemecoinFeeReceiver",
+      "accounts": [
+        {
+          "name": "globalConfig",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "admin",
+          "isMut": true,
+          "isSigner": true
+        }
+      ],
+      "args": [
+        {
+          "name": "createMemecoinFeeReceiver",
+          "type": "publicKey"
+        }
+      ]
+    },
+    {
+      "name": "setLaunchSuccessFeeReceiver",
+      "accounts": [
+        {
+          "name": "globalConfig",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "admin",
+          "isMut": true,
+          "isSigner": true
+        }
+      ],
+      "args": [
+        {
+          "name": "launchSuccessFeeReceiver",
+          "type": "publicKey"
+        }
+      ]
+    },
+    {
+      "name": "setCreateMemecoinFee",
+      "accounts": [
+        {
+          "name": "globalConfig",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "admin",
+          "isMut": true,
+          "isSigner": true
+        }
+      ],
+      "args": [
+        {
+          "name": "createMemecoinFee",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "setLaunchSuccessFeeBps",
+      "accounts": [
+        {
+          "name": "globalConfig",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "admin",
+          "isMut": true,
+          "isSigner": true
+        }
+      ],
+      "args": [
+        {
+          "name": "launchSuccessFeeBps",
+          "type": "u16"
+        }
+      ]
+    },
+    {
+      "name": "createMemecoinConfig",
+      "accounts": [
+        {
+          "name": "creatorMemecoinCounter",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "memecoinConfig",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "createMemecoinFeeReceiver",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "creator",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "mint",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "metadata",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "destination",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "globalConfig",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "rent",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "clock",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "tokenMetadataProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "associatedTokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "token2022Program",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "Spl token program or token program 2022"
+          ]
+        }
+      ],
+      "args": [
+        {
+          "name": "memecoinName",
+          "type": "string"
+        },
+        {
+          "name": "memecoinSymbol",
+          "type": "string"
+        },
+        {
+          "name": "memecoinUri",
+          "type": "string"
+        },
+        {
+          "name": "memecoinDescription",
+          "type": "string"
+        },
+        {
+          "name": "memecoinWebsite",
+          "type": "string"
+        },
+        {
+          "name": "memecoinTelegram",
+          "type": "string"
+        },
+        {
+          "name": "memecoinTwitter",
+          "type": "string"
+        },
+        {
+          "name": "fundingRaiseTier",
+          "type": "u8"
+        }
+      ]
+    },
+    {
+      "name": "buyMemecoin",
+      "accounts": [
+        {
+          "name": "memecoinConfig",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "mint",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "buyer",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "buyerToken",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "memecoinConfigToken",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "clock",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "associatedTokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "token2022Program",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "Spl token program or token program 2022"
+          ]
+        }
+      ],
+      "args": [
+        {
+          "name": "hash",
+          "type": "string"
+        },
+        {
+          "name": "buyAmount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "claimLamports",
+      "accounts": [
+        {
+          "name": "memecoinConfig",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "mint",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "claimer",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "claimerToken",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "memecoinConfigToken",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "clock",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "token2022Program",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "Spl token program or token program 2022"
+          ]
+        }
+      ],
+      "args": [
+        {
+          "name": "claimAmount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "wrapSol",
+      "accounts": [
+        {
+          "name": "memecoinConfig",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "globalConfig",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "payer",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "wrappedSolMint",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "memecoinConfigWrappedSolAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "associatedTokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgram2022",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "createRaydiumPool",
+      "accounts": [
+        {
+          "name": "memecoinConfig",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "globalConfig",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "cpSwapProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "payer",
+          "isMut": true,
+          "isSigner": true,
+          "docs": [
+            "Address paying to create the pool. Can be anyone"
+          ]
+        },
+        {
+          "name": "ammConfig",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "Which config the pool belongs to."
+          ]
+        },
+        {
+          "name": "authority",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "poolState",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "token0Mint",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "Token_0 mint, the key must smaller than token_1 mint."
+          ]
+        },
+        {
+          "name": "token1Mint",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "Token_1 mint, the key must grater then token_0 mint."
+          ]
+        },
+        {
+          "name": "lpMint",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "memecoinConfigToken0",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "memecoin_config token0 account"
+          ]
+        },
+        {
+          "name": "memecoinConfigToken1",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "memecoin_config token1 account"
+          ]
+        },
+        {
+          "name": "memecoinConfigLpToken",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "token0Vault",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "token1Vault",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "createPoolFee",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "create pool fee account"
+          ]
+        },
+        {
+          "name": "observationState",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "launchSuccessFeeReceiver",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "Program to create mint account and mint tokens"
+          ]
+        },
+        {
+          "name": "token2022Program",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "Spl token program or token program 2022"
+          ]
+        },
+        {
+          "name": "associatedTokenProgram",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "Program to create an ATA for receiving position NFT"
+          ]
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "To create a new program account"
+          ]
+        },
+        {
+          "name": "rent",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "Sysvar for program account"
+          ]
+        },
+        {
+          "name": "clock",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "Sysvar for clock account"
+          ]
+        }
+      ],
+      "args": []
+    }
+  ],
+  "accounts": [
+    {
+      "name": "CreatorMemecoinCounter",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "count",
+            "type": "u32"
+          }
+        ]
+      }
+    },
+    {
+      "name": "GlobalConfig",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "admin",
+            "type": "publicKey"
+          },
+          {
+            "name": "createMemecoinFeeReceiver",
+            "type": "publicKey"
+          },
+          {
+            "name": "launchSuccessFeeReceiver",
+            "type": "publicKey"
+          },
+          {
+            "name": "createMemecoinFee",
+            "type": "u64"
+          },
+          {
+            "name": "launchSuccessFeeBps",
+            "type": "u16"
+          }
+        ]
+      }
+    },
+    {
+      "name": "MemecoinConfig",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "creator",
+            "type": "publicKey"
+          },
+          {
+            "name": "creatorMemecoinIndex",
+            "type": "u32"
+          },
+          {
+            "name": "createdTime",
+            "type": "u64"
+          },
+          {
+            "name": "fundingRaiseTier",
+            "type": {
+              "defined": "FundingRaiseTier"
+            }
+          },
+          {
+            "name": "status",
+            "type": {
+              "defined": "LaunchStatus"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "AmmConfig",
+      "docs": [
+        "Holds the current owner of the factory"
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "bump",
+            "docs": [
+              "Bump to identify PDA"
+            ],
+            "type": "u8"
+          },
+          {
+            "name": "disableCreatePool",
+            "docs": [
+              "Status to control if new pool can be create"
+            ],
+            "type": "bool"
+          },
+          {
+            "name": "index",
+            "docs": [
+              "Config index"
+            ],
+            "type": "u16"
+          },
+          {
+            "name": "tradeFeeRate",
+            "docs": [
+              "The trade fee, denominated in hundredths of a bip (10^-6)"
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "protocolFeeRate",
+            "docs": [
+              "The protocol fee"
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "fundFeeRate",
+            "docs": [
+              "The fund fee, denominated in hundredths of a bip (10^-6)"
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "createPoolFee",
+            "docs": [
+              "Fee for create a new pool"
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "protocolOwner",
+            "docs": [
+              "Address of the protocol fee owner"
+            ],
+            "type": "publicKey"
+          },
+          {
+            "name": "fundOwner",
+            "docs": [
+              "Address of the fund fee owner"
+            ],
+            "type": "publicKey"
+          },
+          {
+            "name": "padding",
+            "docs": [
+              "padding"
+            ],
+            "type": {
+              "array": [
+                "u64",
+                16
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "types": [
+    {
+      "name": "FundingRaiseTier",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "TwentySol"
+          },
+          {
+            "name": "FiftySol"
+          },
+          {
+            "name": "OneHundredSol"
+          }
+        ]
+      }
+    },
+    {
+      "name": "LaunchStatus",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "Ongoing"
+          },
+          {
+            "name": "Failed"
+          },
+          {
+            "name": "Succeed"
+          }
+        ]
+      }
+    }
+  ],
+  "events": [
+    {
+      "name": "LamportsClaimed",
+      "fields": [
+        {
+          "name": "claimer",
+          "type": "publicKey",
+          "index": false
+        },
+        {
+          "name": "claimAmount",
+          "type": "u64",
+          "index": false
+        },
+        {
+          "name": "mint",
+          "type": "publicKey",
+          "index": false
+        },
+        {
+          "name": "tokenPrice",
+          "type": "u64",
+          "index": false
+        }
+      ]
+    },
+    {
+      "name": "MemecoinBought",
+      "fields": [
+        {
+          "name": "buyer",
+          "type": "publicKey",
+          "index": false
+        },
+        {
+          "name": "buyAmount",
+          "type": "u64",
+          "index": false
+        },
+        {
+          "name": "mint",
+          "type": "publicKey",
+          "index": false
+        },
+        {
+          "name": "tokenPrice",
+          "type": "u64",
+          "index": false
+        },
+        {
+          "name": "remainAmount",
+          "type": "u64",
+          "index": false
+        },
+        {
+          "name": "hash",
+          "type": "string",
+          "index": false
+        }
+      ]
+    },
+    {
+      "name": "MemecoinCreated",
+      "fields": [
+        {
+          "name": "creator",
+          "type": "publicKey",
+          "index": false
+        },
+        {
+          "name": "createdTime",
+          "type": "u64",
+          "index": false
+        },
+        {
+          "name": "memecoinConfig",
+          "type": "publicKey",
+          "index": false
+        },
+        {
+          "name": "mint",
+          "type": "publicKey",
+          "index": false
+        },
+        {
+          "name": "destination",
+          "type": "publicKey",
+          "index": false
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "index": false
+        },
+        {
+          "name": "symbol",
+          "type": "string",
+          "index": false
+        },
+        {
+          "name": "uri",
+          "type": "string",
+          "index": false
+        },
+        {
+          "name": "description",
+          "type": "string",
+          "index": false
+        },
+        {
+          "name": "decimal",
+          "type": "u8",
+          "index": false
+        },
+        {
+          "name": "website",
+          "type": "string",
+          "index": false
+        },
+        {
+          "name": "telegram",
+          "type": "string",
+          "index": false
+        },
+        {
+          "name": "twitter",
+          "type": "string",
+          "index": false
+        },
+        {
+          "name": "fundingRaiseTier",
+          "type": "u8",
+          "index": false
+        }
+      ]
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "InvalidLaunchSuccessFeeBps",
+      "msg": "Invalid launch success bps."
+    },
+    {
+      "code": 6001,
+      "name": "StatusNotOngoing",
+      "msg": "The status of this memecoin is not ongoing."
+    },
+    {
+      "code": 6002,
+      "name": "UnsoldTokenInsufficient",
+      "msg": "Unsold memecoin is insufficient."
+    },
+    {
+      "code": 6003,
+      "name": "SaleClosed",
+      "msg": "This memecoin sale is already closed."
+    },
+    {
+      "code": 6004,
+      "name": "CalculationError",
+      "msg": "CalculationError."
+    },
+    {
+      "code": 6005,
+      "name": "CannotClaimWhenLaunchSuccess",
+      "msg": "Cannot claim when memecoin launched successfully."
+    },
+    {
+      "code": 6006,
+      "name": "OnlyCreatePoolWhenLaunchSuccess",
+      "msg": "Only can create the raydium pool when launched successfully."
+    },
+    {
+      "code": 6007,
+      "name": "WrongWSOLMint",
+      "msg": "Wrong wrapped sol mint"
+    },
+    {
+      "code": 6008,
+      "name": "InvalidFundingRaiseTier",
+      "msg": "Invalid funding raise tier"
+    },
+    {
+      "code": 6009,
+      "name": "CannotClaimWhenNotEnd",
+      "msg": "Cannot claim when not end."
+    },
+    {
+      "code": 6010,
+      "name": "ClaimAmountTooSmall",
+      "msg": "Claim amount is too small."
+    }
+  ]
+}
