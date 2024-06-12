@@ -81,20 +81,20 @@ When entering the LP, a handling fee of 1.75% (platform income) will be deducted
         <div class="Trades" v-else>
           <div>
             <span>Account</span>
-            <span class="money">SOL</span>
+            <!-- <span class="money">SOL</span> -->
             <span>Token name </span>
             <span>date</span>
             <span>Transaction</span>
           </div>
-          <div class="list" v-for="item in 10" :key="item">
+          <div class="list" v-for="(item,index) in recordList" :key="index">
             <div>
-              <img src="../assets/tu1.png    " alt="" />
-              <p>thsdaadsdssdsda</p>
+              <img :src="item.userDetail.image" alt="" />
+              <p>{{keepFirstSixCharacters(item.buyerAddress)}}</p>
             </div>
-            <span class="money">0.001</span>
-            <span>433.3K</span>
-            <span>14m ago</span>
-            <span>2wadfe</span>
+            <!-- <span class="money">0.001</span> -->
+            <span>{{item.amount/100000/1000}}K</span>
+            <span>{{formatTimeAgo(item.createTime)}}</span>
+            <span style="cursor: pointer;" @click="tosolscan(item.buyerAddress)">{{ keepFirstSixCharacters(item.buyerAddress) }}</span>
           </div>
         </div>
       </div>
@@ -134,7 +134,10 @@ When entering the LP, a handling fee of 1.75% (platform income) will be deducted
           </div>
           <div>
             <input type="text" @input="Calculatesol" v-model="Amount" />
-            <span @click="max2">MAX</span>
+            <span style="cursor: pointer;" @click="max2">MAX</span>
+          </div>
+          <div>
+           {{money}}  {{ ProjectDetails.name  }}
           </div>
           <div>
             <div>
@@ -190,7 +193,7 @@ When entering the LP, a handling fee of 1.75% (platform income) will be deducted
               <!-- <input type="text"   v-model="refundSolAmount" /> -->
             </div>
           </div>
-          <div class="an" v-if="Address" @click="refund" v-loading="loading2">Buy</div>
+          <div class="an" v-if="Address" @click="refund" v-loading="loading2">Refund</div>
           <div class="wallet_an" v-else>
             <wallet-multi-button dark></wallet-multi-button>
           </div>
@@ -224,10 +227,10 @@ When entering the LP, a handling fee of 1.75% (platform income) will be deducted
         </div>
         <div class="RankingList" v-if="purchase_List != ''">
           <h2>Holder distribution</h2>
-          <div v-for="(item,index) in purchase_List" :key="index" >
-            <p v-if="calculatePercentage(item.account.data.parsed.info.tokenAmount.uiAmount) < 100">{{ keepFirstSixCharacters(item.account.data.parsed.info.owner) }}</p>
-            <span v-if="calculatePercentage(item.account.data.parsed.info.tokenAmount.uiAmount) < 100">{{item.account.data.parsed.info.tokenAmount.uiAmount}}</span>
-            <span v-if="calculatePercentage(item.account.data.parsed.info.tokenAmount.uiAmount) < 100">{{ calculatePercentage(item.account.data.parsed.info.tokenAmount.uiAmount) }}%</span>
+          <div v-for="(item,index) in purchase_List" :key="index"  @click="tosolscan(item.account.data.parsed.info.owner)">
+            <p v-if="calculatePercentage(item.account.data.parsed.info.tokenAmount.uiAmount) >0">{{ keepFirstSixCharacters(item.account.data.parsed.info.owner) }}</p>
+            <span v-if="calculatePercentage(item.account.data.parsed.info.tokenAmount.uiAmount) > 0">{{item.account.data.parsed.info.tokenAmount.uiAmount}}</span>
+            <span v-if="calculatePercentage(item.account.data.parsed.info.tokenAmount.uiAmount) > 0">{{ calculatePercentage(item.account.data.parsed.info.tokenAmount.uiAmount) }}%</span>
           </div>
         </div>
       </div>
@@ -315,6 +318,7 @@ let loading = ref(false);
 let connection = ref(null);
 let provider = ref(null);
 let author = ref(0)
+let money = ref(0)
 let contracts = {
   ldc: null,
   ata: null,
@@ -373,8 +377,10 @@ onMounted(() => {
   info();
   GetComments()
   userinfo()
+  TransactionRecords()
   timer.value = setInterval(function () {
     info();
+    TransactionRecords()
   }, 10000);
   // if (Address.value == null) return;
   // provider.value = new anchor.AnchorProvider(connection, wallets, {
@@ -399,6 +405,7 @@ watch(
       init();
       GetComments()
       userinfo()
+      TransactionRecords()
     }
   }
 );
@@ -470,6 +477,17 @@ const CreateCoin = async () => {
       position: "bottom-right",
       duration: 8000,
     });
+    let ye = ProjectDetails.value.price == 0
+                  ? 20
+                  : ProjectDetails.value.price == 1
+                  ? 50
+                  : 100
+    if(Amount.value > (ye - Solquantity()))  return ElNotification({
+      title: "invalid amount",
+      message: "please enter a valid amount to trade.",
+      position: "bottom-right",
+      duration: 8000,
+    });
   if (loading.value) return;
   loading.value = true;
   const timestamp = Date.now();
@@ -515,6 +533,7 @@ const CreateCoin = async () => {
     });
     loading.value = false;
     Amount.value = "";
+    money.value = ''
   } catch (error) {
     ElNotification({
       title: "error",
@@ -630,9 +649,27 @@ const Tokenprice = (TotalAmount) => {
 };
 const AmountDisplay = (e) => {
   Amount.value = e;
+  let ye = ProjectDetails.value.price == 0
+                  ? 20
+                  : ProjectDetails.value.price == 1
+                  ? 50
+                  : 100
+  let ac = new BigNumber(e).dividedBy((new BigNumber(ye).dividedBy(new BigNumber(500000000)))) 
+  console.log(ac.toNumber());
+  money.value = ac.toNumber()
 };
 const Calculatesol = (e) => {
-  console.log(e);
+  console.log('--------',e);
+  console.log(Amount.value);
+  if(Amount.value == '') return  money.value = 0
+  let ye = ProjectDetails.value.price == 0
+                  ? 20
+                  : ProjectDetails.value.price == 1
+                  ? 50
+                  : 100
+  let ac = new BigNumber(Amount.value).dividedBy((new BigNumber(ye).dividedBy(new BigNumber(500000000)))) 
+  console.log(ac.toNumber());
+  money.value = ac.toNumber()
 };
 const proportion = (RemainingQuantity) => {
   if (Leftoverquantity.value) {
@@ -704,6 +741,7 @@ const purchaseList = async()=>{
       }
     );
     purchase_List.value = accounts
+    console.log('数据',purchase_List.value);
     //    accounts.forEach(account => {
     //        const balance = JSON.stringify(account.account.data.parsed.info);
     //        console.log('好东西',balance)
@@ -717,7 +755,7 @@ const keepFirstSixCharacters = (str)=>{
   }
 }
 const calculatePercentage = (quantity)=>{
-  return keepThreeDecimals((Number(quantity)/500000000)*100)
+  return keepThreeDecimals((Number(quantity)/1000000000)*100)
 }
 function keepThreeDecimals(number) {
   return Number(number.toFixed(3));
@@ -731,7 +769,7 @@ const max2 = ()=>{
   let cs =  Solquantity()
   let surplus = Number(ye) - Number(cs)
   if(surplus > solBalance.value){
-    Amount.value = solBalance.value
+    Amount.value = solBalance.value - 0.01
   }else{
     Amount.value = surplus
   }
@@ -856,6 +894,42 @@ const reply = (ids)=>{
   Postreply.value = true
   id.value = ids
   comment.value = `#${ids}`
+}
+const tosolscan = (e)=>{
+  let url = `https://solscan.io/account/${e}`
+  window.open(url);
+}
+let recordList = ref([])
+const TransactionRecords = ()=>{
+  get(
+    `/api/person/logs/${diz.value}/1/1/30`,
+    ''
+  )
+    .then((res) => {
+      recordList.value = res.returnData
+      console.log('交易记录',res.returnData);
+    })
+    .catch((e) => {
+      console.error(e);
+    });
+}
+const formatTimeAgo = (timestamp)=>{
+  const now = new Date();
+  const time = new Date(timestamp);
+  const diff = Math.round((now - time) / 1000); // 计算时间差，单位为秒
+
+  if (diff < 60) {
+    return diff + "s ago"; // 不足1分钟
+  } else if (diff < 3600) {
+    const minutes = Math.floor(diff / 60);
+    return minutes + "m ago"; // 不足1小时
+  } else if (diff < 86400) {
+    const hours = Math.floor(diff / 3600);
+    return hours + "h ago"; // 不足1天
+  } else {
+    const days = Math.floor(diff / 86400);
+    return days + "d ago"; // 大于等于1天
+  }
 }
 </script>
 
@@ -1356,7 +1430,13 @@ const reply = (ids)=>{
             margin-bottom: 6px;
           }
         }
-        > div:nth-child(7) {
+        >div:nth-child(7){
+          color: #ef08ef;
+          font-size: 0.2rem;
+          font-weight: 500;
+          margin-bottom: .125rem;
+        }
+        > div:nth-child(8) {
           margin-bottom: 0.5rem;
           display: flex;
           align-items: center;
@@ -1592,6 +1672,7 @@ const reply = (ids)=>{
           font-size: 0.2rem;
           color: #fff;
           margin-bottom: 0.125rem;
+          cursor: pointer;
           @media (max-width: 800px) {
             font-size: 12px;
           }
