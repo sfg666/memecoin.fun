@@ -84,7 +84,7 @@ When entering the LP, a handling fee of 1.75% (platform income) will be deducted
             <!-- <span class="money">SOL</span> -->
             <span>Token name </span>
             <span>date</span>
-            <span>Transaction</span>
+            <!-- <span>Transaction</span> -->
           </div>
           <div class="list" v-for="(item,index) in recordList" :key="index">
             <div>
@@ -94,7 +94,7 @@ When entering the LP, a handling fee of 1.75% (platform income) will be deducted
             <!-- <span class="money">0.001</span> -->
             <span>{{item.amount/100000/1000}}K</span>
             <span>{{formatTimeAgo(item.createTime)}}</span>
-            <span style="cursor: pointer;" @click="tosolscan(item.buyerAddress)">{{ keepFirstSixCharacters(item.buyerAddress) }}</span>
+            <!-- <span style="cursor: pointer;" @click="tosolscan(item.buyerAddress)">{{ keepFirstSixCharacters(item.buyerAddress) }}</span> -->
           </div>
         </div>
       </div>

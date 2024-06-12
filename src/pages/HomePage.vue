@@ -395,7 +395,7 @@ const formatNumberWith6DecimalPlaces = (number) => {
   return Number(number.toFixed(6));
 };
 const proportion = (SalesVolume, total) => {
-  return Number(SalesVolume / total).toFixed(2) * 100;
+  return (Number(SalesVolume / total) * 100).toFixed(2);
 };
 const encrypt = (word)=>{
     return CryptoJS.AES.encrypt(word, 'your-secret-key').toString()

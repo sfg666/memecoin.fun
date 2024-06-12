@@ -396,7 +396,7 @@ const toDetails = (address) => {
   });
 };
 const proportion = (SalesVolume, total) => {
-  return Number(SalesVolume / total).toFixed(2) * 100;
+  return (Number(SalesVolume / total) * 100).toFixed(2);
 };
 //计算出售的代币价值多少u
 const CalculateSellingPrice = (remainingQuantity, TotalAmount) => {
