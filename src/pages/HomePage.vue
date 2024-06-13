@@ -50,7 +50,7 @@
           <div>
             <div>
               <p>Number of people</p>
-              <span>0</span>
+              <span>{{ item.investor }}</span>
             </div>
             <div>
               <p>Countdown</p>
