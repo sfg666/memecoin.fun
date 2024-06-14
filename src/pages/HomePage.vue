@@ -181,7 +181,9 @@
           </div>
           <div>
             <p>{{ truncateString(item.MintPda) }}</p>
-            <span></span>
+            <span v-if="!sjc(item.expireTime) && item.remind == 0">complete</span>
+            <span v-if="!sjc(item.expireTime) && item.remind > 0">afoot</span>
+            <span v-if="sjc(item.expireTime)">expire</span>
           </div>
         </div>
       </div>
@@ -403,6 +405,12 @@ const encrypt = (word)=>{
 const animations = (e)=>{
   store.state.animations = checked1.value
 }
+const sjc = (dateString) => {
+  const timestamp = Date.parse(dateString);
+  const currentTimestamp = Date.now();
+  if (currentTimestamp > timestamp) return true;
+  if (currentTimestamp < timestamp) return false;
+};
 </script>
 
 <style lang="less" scoped>
