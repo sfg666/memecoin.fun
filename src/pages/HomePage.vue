@@ -215,7 +215,7 @@ watch(
     }
   }
 );
-const sort = ref("remind");
+const sort = ref("createTime");
 const order = ref("DESC");
 const checked1 = ref(true);
 const checked2 = ref(false);
